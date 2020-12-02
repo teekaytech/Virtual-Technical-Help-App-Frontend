@@ -1,5 +1,5 @@
 import {
-  LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, initialState, LOGGED_IN, NOT_LOGGED_IN,
+  LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, initialState, LOGGED_IN, NOT_LOGGED_IN, LOGOUT,
 } from '../actions/types';
 
 const authReducer = (state = initialState, action) => {
@@ -26,6 +26,15 @@ const authReducer = (state = initialState, action) => {
         user: {},
         appointments: [],
         error: action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        loading: false,
+        loggedIn: NOT_LOGGED_IN,
+        user: {},
+        appointments: [],
+        error: '',
       };
     default:
       return state;

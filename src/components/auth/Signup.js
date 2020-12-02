@@ -46,6 +46,7 @@ class Signup extends Component {
     } = this.state;
     return (
       <div>
+        <h3>Registration form</h3>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"

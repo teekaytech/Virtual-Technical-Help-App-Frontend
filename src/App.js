@@ -20,7 +20,6 @@ const App = ({ checkLoginStatus }) => {
         </header>
         <main>
           <Switch>
-            effect;
             <Route exact path="/" component={Home} />
             <Route path="/user/:user_id/dashboard" component={Dashboard} />
           </Switch>
@@ -38,8 +37,12 @@ App.propTypes = {
   checkLoginStatus: PropTypes.func,
 };
 
+const mapStateToProps = state => ({
+  status: state.auth.loggedIn,
+});
+
 const mapDispatchToProps = dispatch => ({
   checkLoginStatus: () => dispatch(checkLoginStatus()),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

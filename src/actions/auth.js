@@ -1,5 +1,7 @@
 import Axios from 'axios';
-import { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE } from './types';
+import {
+  LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE, LOGOUT,
+} from './types';
 
 export const userLoginRequest = () => ({
   type: LOGIN_REQUEST,
@@ -15,39 +17,26 @@ export const userLoginFailure = error => ({
   payload: error,
 });
 
-export const loginUser = (username, password) => dispatch => {
-  try {
-    const data = new FormData();
-    data.append('username', username);
-    data.append('password', password);
+export const userLogout = () => ({
+  type: LOGOUT,
+});
 
-    const config = {
-      method: 'post',
-      url: 'https://boiling-basin-10755.herokuapp.com/api/v1/login',
-      headers: {
-        ...data.getHeaders(),
-      },
-      data,
-    };
+export const login = (username, password) => dispatch => {
+  try {
+    const user = { username, password };
     dispatch(userLoginRequest());
-    Axios(config)
+    Axios.post('https://boiling-basin-10755.herokuapp.com//api/v1/login', user)
       .then(response => {
         if (response.data.logged_in) {
-          console.log(response.data);
-          dispatch(userLoginSuccess(response.data));
+          localStorage.setItem('token', response.data.token);
+          dispatch(userLoginSuccess(response.data.user));
         }
-        if (response.data.status === 'NOT_LOGGED_IN') {
-          console.log(response.data.error);
-          dispatch(userLoginFailure(response.data.error));
-        }
-        console.log(JSON.stringify(response.data));
       })
       .catch(error => {
-        console.log(error);
+        dispatch(userLoginFailure(error.message));
       });
   } catch (error) {
-    console.log(error);
-    dispatch(userLoginFailure(error));
+    dispatch(userLoginFailure(error.message));
   }
 };
 
@@ -56,7 +45,6 @@ export const signup = userParams => dispatch => {
     dispatch(userLoginRequest());
     Axios.post('https://boiling-basin-10755.herokuapp.com/api/v1/users', userParams)
       .then(response => {
-        console.log(response.data);
         if (response.data.created) {
           localStorage.setItem('token', response.data.token);
           dispatch(userLoginSuccess(response.data.user));
@@ -66,10 +54,10 @@ export const signup = userParams => dispatch => {
         }
       })
       .catch(error => {
-        dispatch(userLoginFailure(error));
+        dispatch(userLoginFailure(error.message));
       });
   } catch (error) {
-    dispatch(userLoginFailure(error));
+    dispatch(userLoginFailure(error.message));
   }
 };
 
@@ -77,23 +65,45 @@ export const checkLoginStatus = () => dispatch => {
   try {
     dispatch(userLoginRequest());
     const token = localStorage.getItem('token');
-    Axios.get('https://boiling-basin-10755.herokuapp.com/api/v1/auto_login', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    if (token) {
+      Axios.get('https://boiling-basin-10755.herokuapp.com/api/v1/auto_login', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then(response => {
+          if (response.data.logged_in) {
+            dispatch(userLoginSuccess(response.data.user));
+          }
+          if (!response.data.logged_in) {
+            dispatch(userLoginFailure(response.data.message));
+          }
+        })
+        .catch(error => {
+          dispatch(userLoginFailure(error.message));
+        });
+    } else {
+      dispatch(userLoginFailure('You are not authorized. Please login.'));
+    }
+  } catch (error) {
+    dispatch(userLoginFailure(error.message));
+  }
+};
+
+export const logout = () => dispatch => {
+  try {
+    dispatch(userLoginRequest());
+    localStorage.removeItem('token');
+    Axios.delete('https://boiling-basin-10755.herokuapp.com/api/v1/logout')
       .then(response => {
-        if (response.data.logged_in) {
-          dispatch(userLoginSuccess(response.data.user));
-        }
-        if (!response.data.logged_in) {
-          dispatch(userLoginFailure(response.data.message));
+        if (response.data.logged_out) {
+          dispatch(userLogout());
         }
       })
       .catch(error => {
-        dispatch(userLoginFailure(error));
+        dispatch(userLoginFailure(error.message));
       });
   } catch (error) {
-    dispatch(userLoginFailure(error));
+    dispatch(userLoginFailure(error.message));
   }
 };

@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { loginUser } from '../../actions/auth';
+import { login } from '../../actions/auth';
 
-const Login = ({ loginUser }) => {
+const Login = ({ login }) => {
   const [username, setusername] = useState('');
   const [password, setpassword] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
-    loginUser(username, password);
+    login(username, password);
   };
 
   return (
     <div>
+      <h3>Login Form</h3>
       <form onSubmit={handleSubmit}>
         <input
           type="username"
@@ -28,32 +29,32 @@ const Login = ({ loginUser }) => {
         <input
           type="password"
           name="password"
-          placeholdeSignupr="Enter password here"
+          placeholder="Enter password here"
           onChange={event => {
             setpassword(event.target.value);
           }}
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
 };
 
 Login.defaultProps = {
-  loginUser: PropTypes.func,
+  login: PropTypes.func,
 };
 
 Login.propTypes = {
-  loginUser: PropTypes.func,
+  login: PropTypes.func,
 };
 
-const mapStateToProps = state => ({
-  details: state.auth,
-});
+// const mapStateToProps = state => ({
+//   details: state.auth,
+// });
 
 const mapDispatchToProps = dispatch => ({
-  logginUser: (username, password) => dispatch(loginUser(username, password)),
+  login: (username, password) => dispatch(login(username, password)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
