@@ -2,7 +2,7 @@ import {
   LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, initialState, LOGGED_IN, NOT_LOGGED_IN,
 } from '../actions/types';
 
-const loginReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
       return {
@@ -32,4 +32,4 @@ const loginReducer = (state = initialState, action) => {
   }
 };
 
-export default loginReducer;
+export default authReducer;
