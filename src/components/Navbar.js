@@ -4,40 +4,49 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../actions/auth';
 
-const Navbar = ({ status, logout }) => {
+const Navbar = ({ logout, username, userId }) => {
   const handleClick = () => {
     logout();
   };
   return (
     <nav>
-      <Link to="/">
-        <h1>Home</h1>
-      </Link>
-      <Link to="/user/:user_id/dashboard">
-        <h1>Dashboard</h1>
-      </Link>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to={`/user/${userId}/appointments`}>Appointments</Link>
+        </li>
+        <li>
+          <Link to="/engineers">Engineers</Link>
+        </li>
+        <li>
+          <button type="button" onClick={() => handleClick()}>Logout</button>
+        </li>
+      </ul>
       <h4>
-        Loggin Status:
+        Current User:
         {' '}
-        {status}
+        {username}
       </h4>
-      <button type="button" onClick={() => handleClick()}>Logout</button>
     </nav>
   );
 };
 
 Navbar.defaultProps = {
-  status: PropTypes.string,
+  username: PropTypes.string,
   logout: PropTypes.func,
 };
 
 Navbar.propTypes = {
-  status: PropTypes.string,
+  username: PropTypes.string,
   logout: PropTypes.func,
+  userId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
-  status: state.auth.loggedIn,
+  username: state.auth.user.username,
+  userId: state.auth.user.id,
 });
 
 const mapDispatchToProps = dispatch => ({

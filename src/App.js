@@ -3,12 +3,13 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Navbar from './components/Navbar';
-import Dashboard from './containers/Dashboard';
 import Home from './containers/Home';
 import { checkLoginStatus } from './actions/auth';
 import { LOGGED_IN } from './actions/types';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
+import AppointmentList from './containers/AppointmentList';
+import EngineerList from './containers/EngineerList';
 
 const App = ({ checkLoginStatus, status, loading }) => {
   useEffect(() => {
@@ -31,7 +32,8 @@ const App = ({ checkLoginStatus, status, loading }) => {
           <main>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/user/:user_id/dashboard" component={Dashboard} />
+              <Route path="/user/:user_id/appointments" component={AppointmentList} />
+              <Route path="/engineers" component={EngineerList} />
             </Switch>
           </main>
         </div>
