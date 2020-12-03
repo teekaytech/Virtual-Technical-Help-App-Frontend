@@ -37,7 +37,7 @@ const EngineerList = ({ loading, engineers, fetchAllEngineers }) => {
   return (
     <div>
       <h4>All Engineers List</h4>
-      { allEngineers }
+      {allEngineers}
     </div>
   );
 };

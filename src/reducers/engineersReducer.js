@@ -1,6 +1,8 @@
 import {
   engineersInitialState,
-  FETCH_ENGINEERS_FAILURE, FETCH_ENGINEERS_PENDING, FETCH_ENGINEERS_SUCCESS,
+  FETCH_ENGINEERS_FAILURE,
+  FETCH_ENGINEERS_PENDING,
+  FETCH_ENGINEERS_SUCCESS,
 } from '../actions/types';
 
 const engineersReducer = (state = engineersInitialState, action) => {

@@ -27,5 +27,6 @@ export const authInitialState = {
 export const engineersInitialState = {
   loading: false,
   engineers: [],
+  engineer: {},
   error: '',
 };
