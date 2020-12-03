@@ -10,6 +10,7 @@ import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import AppointmentList from './containers/AppointmentList';
 import EngineerList from './containers/EngineerList';
+import Engineer from './components/Engineer';
 
 const App = ({ checkLoginStatus, status, loading }) => {
   useEffect(() => {
@@ -32,8 +33,13 @@ const App = ({ checkLoginStatus, status, loading }) => {
           <main>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/user/:user_id/appointments" component={AppointmentList} />
-              <Route path="/engineers" component={EngineerList} />
+              <Route
+                exact
+                path="/user/:user_id/appointments"
+                component={AppointmentList}
+              />
+              <Route exact path="/engineers" component={EngineerList} />
+              <Route exact path="/engineers/:id" component={Engineer} />
             </Switch>
           </main>
         </div>

@@ -17,10 +17,15 @@ export const FETCH_CURRENT_ENGINEER_REQUEST = 'FETCH_CURRENT_ENGINEER_REQUEST';
 export const FETCH_CURRENT_ENGINEER_SUCCESS = 'FETCH_CURRENT_ENGINEER_SUCCESS';
 export const FETCH_CURRENT_ENGINEER_FAILURE = 'FETCH_CURRENT_ENGINEER_FAILURE';
 
-export const initialState = {
+export const authInitialState = {
   loggedIn: 'NOT_LOGGED_IN',
   user: {},
-  appointments: [],
   error: '',
   loading: false,
+};
+
+export const engineersInitialState = {
+  loading: false,
+  engineers: [],
+  error: '',
 };
