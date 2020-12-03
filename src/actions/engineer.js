@@ -1,29 +1,31 @@
 import Axios from './import';
 import { requestFailure, requestPending } from './auth';
-import { FETCH_ENGINEERS_FAILURE, FETCH_ENGINEERS_PENDING, FETCH_ENGINEERS_SUCCESS } from './types';
+import {
+  FETCH_CURRENT_ENGINEER_REQUEST,
+  FETCH_CURRENT_ENGINEER_FAILURE,
+  FETCH_CURRENT_ENGINEER_SUCCESS,
+} from './types';
 
-const fetchEngineersSuccess = engineers => ({
-  type: FETCH_ENGINEERS_SUCCESS,
-  payload: engineers,
+const fetchCurrentEngineersSuccess = engineer => ({
+  type: FETCH_CURRENT_ENGINEER_SUCCESS,
+  payload: engineer,
 });
 
-const fetchEngineers = () => dispatch => {
+const fetchCurrentEngineer = id => dispatch => {
   try {
-    dispatch(requestPending(FETCH_ENGINEERS_PENDING));
-    Axios.get(
-      'https://boiling-basin-10755.herokuapp.com//api/v1/engineers',
-    )
+    dispatch(requestPending(FETCH_CURRENT_ENGINEER_REQUEST));
+    Axios.get(`https://boiling-basin-10755.herokuapp.com//api/v1/engineers/${id}`)
       .then(response => {
         if (response.status === 200) {
-          dispatch(fetchEngineersSuccess(response.data));
+          dispatch(fetchCurrentEngineersSuccess(response.data));
         }
       })
       .catch(error => {
-        dispatch(requestFailure(FETCH_ENGINEERS_FAILURE, error.message));
+        dispatch(requestFailure(FETCH_CURRENT_ENGINEER_FAILURE, error.message));
       });
   } catch (error) {
-    dispatch(requestFailure(FETCH_ENGINEERS_FAILURE, error.message));
+    dispatch(requestFailure(FETCH_CURRENT_ENGINEER_FAILURE, error.message));
   }
 };
 
-export default fetchEngineers;
+export default fetchCurrentEngineer;
