@@ -18,14 +18,14 @@ const appointmentsReducer = (state = appointmentsInitialState, action) => {
       return {
         ...state,
         loading: false,
-        status: true,
+        createStatus: true,
       };
     case ADD_APPOINTMENT_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
-        status: false,
+        createStatus: false,
       };
     case FETCH_APPOINTMENTS_SUCCESS:
       return {
@@ -33,14 +33,14 @@ const appointmentsReducer = (state = appointmentsInitialState, action) => {
         loading: false,
         appointments: action.payload,
         error: '',
-        status: false,
+        createStatus: false,
       };
     case FETCH_APPOINTMENTS_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
-        status: false,
+        createStatus: false,
       };
     default:
       return state;

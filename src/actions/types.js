@@ -41,5 +41,5 @@ export const appointmentsInitialState = {
   loading: false,
   appointments: [],
   error: '',
-  status: false,
+  createStatus: false,
 };

@@ -16,27 +16,30 @@ const Engineer = ({
 
   const thisEngineer = Object.keys(engineer).length ? (
     <section>
-      <p>
-        Name:
-        {' '}
-        {engineer.name}
-      </p>
-      <p>
-        Stack:
-        {' '}
-        { engineer.stack}
-      </p>
-      <p>
-        Location
-        {' '}
-        { engineer.location }
-      </p>
-      <img src={engineer.avatar_link} alt="Engineer Img" />
-      <button type="button">
-        Book Appointment with
-        {' '}
-        { engineer.name }
-      </button>
+      <div>
+        <p>
+          Name:
+          {' '}
+          {engineer.name}
+        </p>
+        <p>
+          Stack:
+          {' '}
+          {engineer.stack}
+        </p>
+        <p>
+          Location
+          {' '}
+          {engineer.location}
+        </p>
+        <img src={engineer.avatar_link} alt="Engineer Img" />
+        <button type="button">
+          Book Appointment with
+          {' '}
+          {engineer.name}
+        </button>
+      </div>
+      <Appointment engineerId={engineer.id} />
     </section>
   ) : (
     <p>Fetching engineer...</p>
@@ -50,7 +53,6 @@ const Engineer = ({
     <div>
       Individual Engineer
       {thisEngineer}
-      <Appointment />
     </div>
   );
 };
@@ -59,6 +61,7 @@ Engineer.propTypes = {
   loading: PropTypes.bool.isRequired,
   fetchCurrentEngineer: PropTypes.func.isRequired,
   engineer: PropTypes.shape({
+    id: PropTypes.number,
     name: PropTypes.string,
     stack: PropTypes.string,
     location: PropTypes.string,
