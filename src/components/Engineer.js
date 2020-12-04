@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchCurrentEngineer from '../actions/engineer';
+import Appointment from './Appointment';
 
 const Engineer = ({
   loading, engineer, fetchCurrentEngineer, match,
@@ -44,10 +45,12 @@ const Engineer = ({
   if (loading) {
     return (<p>Fetching engineer...</p>);
   }
+
   return (
     <div>
       Individual Engineer
       {thisEngineer}
+      <Appointment />
     </div>
   );
 };

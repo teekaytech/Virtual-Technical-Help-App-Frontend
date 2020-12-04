@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Navbar from './components/Navbar';
 import Home from './containers/Home';
-import { checkLoginStatus } from './actions/auth';
+import { checkLoginStatus, logout } from './actions/auth';
 import { LOGGED_IN } from './actions/types';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
@@ -12,15 +12,18 @@ import AppointmentList from './containers/AppointmentList';
 import EngineerList from './containers/EngineerList';
 import Engineer from './components/Engineer';
 
-const App = ({ checkLoginStatus, status, loading }) => {
+const App = ({
+  checkLoginStatus, status, loading, logoutUser,
+}) => {
   useEffect(() => {
     checkLoginStatus();
-  }, [checkLoginStatus]);
+    setTimeout(() => {
+      logoutUser();
+    }, 1200000); // logout the user after 30minutes of inactivity
+  }, [checkLoginStatus, logoutUser]);
 
   if (loading) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   if (status === LOGGED_IN) {
@@ -55,14 +58,11 @@ const App = ({ checkLoginStatus, status, loading }) => {
   );
 };
 
-App.defaultProps = {
-  checkLoginStatus: PropTypes.fuloadingnc,
-};
-
 App.propTypes = {
-  checkLoginStatus: PropTypes.func,
+  checkLoginStatus: PropTypes.func.isRequired,
   status: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
+  logoutUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -72,6 +72,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   checkLoginStatus: () => dispatch(checkLoginStatus()),
+  logoutUser: () => dispatch(logout()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
