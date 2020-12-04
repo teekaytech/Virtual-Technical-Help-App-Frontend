@@ -1,6 +1,6 @@
 import Axios from 'axios';
-import { requestFailure } from './auth';
-import { ADD_APPOINTMENT_FAILURE, ADD_APPOINTMENT_SUCCESS } from './types';
+import { requestFailure, requestPending } from './auth';
+import { ADD_APPOINTMENT_FAILURE, ADD_APPOINTMENT_SUCCESS, APPOINTMENT_ACTION_REQUEST } from './types';
 
 export const makeAppointment = appointment => ({
   type: ADD_APPOINTMENT_SUCCESS,
@@ -9,7 +9,13 @@ export const makeAppointment = appointment => ({
 
 export const addAppointment = data => dispatch => {
   try {
-    Axios.post('https://boiling-basin-10755.herokuapp.com//api/v1/login', data)
+    dispatch(requestPending(APPOINTMENT_ACTION_REQUEST));
+    const token = localStorage.getItem('token');
+    Axios.post('https://boiling-basin-10755.herokuapp.com//api/v1/appointments', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }, data)
       .then(response => {
         // if (response.data.logged_in) {
         // localStorage.setItem('token', response.data.token);

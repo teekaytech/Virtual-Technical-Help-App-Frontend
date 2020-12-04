@@ -17,6 +17,9 @@ export const FETCH_CURRENT_ENGINEER_REQUEST = 'FETCH_CURRENT_ENGINEER_REQUEST';
 export const FETCH_CURRENT_ENGINEER_SUCCESS = 'FETCH_CURRENT_ENGINEER_SUCCESS';
 export const FETCH_CURRENT_ENGINEER_FAILURE = 'FETCH_CURRENT_ENGINEER_FAILURE';
 
+export const APPOINTMENT_ACTION_REQUEST = 'APPOINTMENT_ACTION_REQUEST';
+export const FETCH_APPOINTMENTS_SUCCESS = 'FETCH_APPOINTMENTS_SUCCESS';
+export const FETCH_APPOINTMENTS_FAILURE = 'FETCH_APPOINTMENTS_FAILURE';
 export const ADD_APPOINTMENT_SUCCESS = 'ADD_APPOINTMENT_SUCCESS';
 export const ADD_APPOINTMENT_FAILURE = 'ADD_APPOINTMENT_FAILURE';
 
@@ -32,4 +35,11 @@ export const engineersInitialState = {
   engineers: [],
   engineer: {},
   error: '',
+};
+
+export const appointmentsInitialState = {
+  loading: false,
+  appointments: [],
+  error: '',
+  status: false,
 };
