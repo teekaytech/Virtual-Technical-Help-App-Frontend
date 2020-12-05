@@ -6,7 +6,7 @@ import Navbar from './components/Navbar';
 import Home from './containers/Home';
 import { checkLoginStatus, logout } from './actions/auth';
 import { LOGGED_IN } from './actions/types';
-import Login from './components/auth/Login';
+// import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import AppointmentList from './containers/AppointmentList';
 import EngineerList from './containers/EngineerList';
@@ -52,7 +52,7 @@ const App = ({
 
   return (
     <div>
-      <Login />
+      {/* <Login /> */}
       <Signup />
     </div>
   );

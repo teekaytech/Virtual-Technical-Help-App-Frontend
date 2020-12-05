@@ -1,106 +1,156 @@
-import React, { Component } from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  Formik, Form, Field, ErrorMessage,
+} from 'formik';
+import * as Yup from 'yup';
 import { signup } from '../../actions/auth';
 
-class Signup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleSubmit = e => {
-    const { signup } = this.props;
-    const {
-      name,
-      username,
-      email,
-      password,
-      passwordConfirmation,
-    } = this.state;
-    const user = {
-      name, username, email, password, passwordConfirmation,
-    };
-    e.preventDefault();
-    signup(user);
+const Signup = ({ signup }) => {
+  const initialValues = {
+    name: '',
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
   };
 
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
+  const SignUnSchema = Yup.object().shape({
+    name: Yup.string()
+      .required('Name is required')
+      .min(6, 'Name is too short - should be 6 characters minimum'),
 
-  render() {
-    const {
-      name, username, email, password, passwordConfirmation,
-    } = this.state;
-    return (
-      <div>
-        <h3>Registration form</h3>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter Name here"
-            value={name}
-            onChange={this.handleChange}
-          />
+    username: Yup.string()
+      .required('Username is required')
+      .min(6, 'Username is too short - should be 6 characters minimum'),
 
-          <input
-            type="text"
-            name="username"
-            placeholder="Enter username here"
-            onChange={this.handleChange}
-            value={username}
-          />
+    email: Yup.string().email('Invalid Email address').required('Email is required'),
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter Email here"
-            value={email}
-            onChange={this.handleChange}
-          />
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Password is too short - should be 6 chars minimum'),
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter password here"
-            value={password}
-            onChange={this.handleChange}
-          />
+    passwordConfirmation: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+  });
 
-          <input
-            type="password"
-            name="passwordConfirmation"
-            placeholder="Re-enter the password"
-            value={passwordConfirmation}
-            onChange={this.handleChange}
-          />
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={SignUnSchema}
+      onSubmit={values => {
+        signup(values);
+      }}
+    >
+      {formik => {
+        const {
+          errors, touched, isValid, dirty,
+        } = formik;
+        return (
+          <div className="form-container">
+            <h3>Registration form</h3>
+            <Form>
+              <div className="form-row">
+                <label htmlFor="name">Name:</label>
+                <Field
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Enter Name here"
+                  className={errors.name && touched.name ? 'input-error' : null}
+                />
+                <ErrorMessage name="name" component="span" className="error" />
+              </div>
 
-          <button type="submit">Register</button>
-        </form>
-      </div>
-    );
-  }
-}
+              <div className="form-row">
+                <label htmlFor="username">Username: </label>
+                <Field
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="Enter username here"
+                  className={
+                    errors.username && touched.username ? 'input-error' : null
+                  }
+                />
+                <ErrorMessage
+                  name="username"
+                  component="span"
+                  className="error"
+                />
+              </div>
 
-Signup.defaultProps = {
-  signup: PropTypes.func,
+              <div className="form-row">
+                <label htmlFor="username">Email: </label>
+                <Field
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter Email here"
+                  className={
+                    errors.email && touched.email ? 'input-error' : null
+                  }
+                />
+                <ErrorMessage name="email" component="span" className="error" />
+              </div>
+
+              <div className="form-row">
+                <label htmlFor="password">Password: </label>
+                <Field
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Enter password here"
+                  className={
+                    errors.password && touched.password ? 'input-error' : null
+                  }
+                />
+                <ErrorMessage
+                  name="password"
+                  component="span"
+                  className="error"
+                />
+              </div>
+
+              <div className="form-row">
+                <label htmlFor="passwordConfirmation">Confirm Password: </label>
+                <Field
+                  type="password"
+                  name="passwordConfirmation"
+                  id="passwordConfirmation"
+                  placeholder="Re-enter password here"
+                  className={
+                    errors.passwordConfirmation && touched.passwordConfirmation
+                      ? 'input-error'
+                      : null
+                  }
+                />
+                <ErrorMessage
+                  name="passwordConfirmation"
+                  component="span"
+                  className="error"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className={!(dirty && isValid) ? 'disabled-btn' : ''}
+                disabled={!(dirty && isValid)}
+              >
+                Register
+              </button>
+            </Form>
+          </div>
+        );
+      }}
+    </Formik>
+  );
 };
 
 Signup.propTypes = {
-  signup: PropTypes.func,
+  signup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
