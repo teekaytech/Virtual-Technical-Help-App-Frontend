@@ -1,6 +1,7 @@
 import Axios from './import';
 import { requestFailure, requestPending } from './auth';
 import {
+  API_URL,
   FETCH_ENGINEERS_FAILURE,
   FETCH_ENGINEERS_PENDING,
   FETCH_ENGINEERS_SUCCESS,
@@ -14,7 +15,7 @@ const fetchEngineersSuccess = engineers => ({
 const fetchEngineers = () => dispatch => {
   try {
     dispatch(requestPending(FETCH_ENGINEERS_PENDING));
-    Axios.get('https://boiling-basin-10755.herokuapp.com//api/v1/engineers')
+    Axios.get(`${API_URL}/engineers`)
       .then(response => {
         if (response.status === 200) {
           dispatch(fetchEngineersSuccess(response.data));

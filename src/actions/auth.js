@@ -1,6 +1,12 @@
 import Axios from './import';
 import {
-  LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE, LOGOUT, LOGOUT_REQUEST, LOGOUT_FAILURE,
+  LOGIN_SUCCESS,
+  LOGIN_REQUEST,
+  LOGIN_FAILURE,
+  LOGOUT,
+  LOGOUT_REQUEST,
+  LOGOUT_FAILURE,
+  API_URL,
 } from './types';
 
 export const requestPending = actionType => ({
@@ -25,7 +31,7 @@ export const login = (username, password) => dispatch => {
   try {
     const user = { username, password };
     dispatch(requestPending(LOGIN_REQUEST));
-    Axios.post('https://boiling-basin-10755.herokuapp.com//api/v1/login', user)
+    Axios.post(`${API_URL}/login`, user)
       .then(response => {
         if (response.data.logged_in) {
           localStorage.setItem('token', response.data.token);
@@ -33,17 +39,17 @@ export const login = (username, password) => dispatch => {
         }
       })
       .catch(error => {
-        dispatch(requestFailure(LOGIN_FAILURE, error.message));
+        dispatch(requestFailure(LOGIN_FAILURE, `${error.message}: Invalid Username or password`));
       });
   } catch (error) {
-    dispatch(requestFailure(LOGIN_FAILURE, error.message));
+    dispatch(requestFailure(LOGIN_FAILURE, `${error.message}: Unexpected Error. Please try again.`));
   }
 };
 
 export const signup = userParams => dispatch => {
   try {
     dispatch(requestPending(LOGIN_REQUEST));
-    Axios.post('https://boiling-basin-10755.herokuapp.com/api/v1/users', userParams)
+    Axios.post(`${API_URL}/users`, userParams)
       .then(response => {
         if (response.data.created) {
           localStorage.setItem('token', response.data.token);
@@ -66,7 +72,7 @@ export const checkLoginStatus = () => dispatch => {
     dispatch(requestPending(LOGIN_REQUEST));
     const token = localStorage.getItem('token');
     if (token) {
-      Axios.get('https://boiling-basin-10755.herokuapp.com/api/v1/auto_login', {
+      Axios.get(`${API_URL}/auto_login`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -96,7 +102,7 @@ export const logout = () => dispatch => {
   try {
     dispatch(requestPending(LOGOUT_REQUEST));
     localStorage.removeItem('token');
-    Axios.delete('https://boiling-basin-10755.herokuapp.com/api/v1/logout')
+    Axios.delete(`${API_URL}/logout`)
       .then(response => {
         if (response.data.logged_out) {
           dispatch(userLogout());
