@@ -1,5 +1,12 @@
 import {
-  LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGGED_IN, NOT_LOGGED_IN, LOGOUT, authInitialState,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGIN_REQUEST,
+  LOGGED_IN,
+  NOT_LOGGED_IN,
+  LOGOUT,
+  authInitialState,
+  TOGGLE_FORM,
 } from '../actions/types';
 
 const authReducer = (state = authInitialState, action) => {
@@ -9,6 +16,11 @@ const authReducer = (state = authInitialState, action) => {
         ...state,
         loading: true,
         error: '',
+      };
+    case TOGGLE_FORM:
+      return {
+        ...state,
+        toggleForm: !state.toggleForm,
       };
     case LOGIN_SUCCESS:
       return {

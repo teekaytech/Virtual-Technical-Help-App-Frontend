@@ -7,6 +7,7 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_FAILURE,
   API_URL,
+  TOGGLE_FORM,
 } from './types';
 
 export const requestPending = actionType => ({
@@ -25,6 +26,10 @@ export const requestFailure = (actionType, error) => ({
 
 export const userLogout = () => ({
   type: LOGOUT,
+});
+
+export const toggleForm = () => ({
+  type: TOGGLE_FORM,
 });
 
 export const login = loginDetails => dispatch => {

@@ -4,16 +4,21 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Navbar from './components/Navbar';
 import Home from './containers/Home';
-import { checkLoginStatus, logout } from './actions/auth';
+import { checkLoginStatus, logout, toggleForm } from './actions/auth';
 import { LOGGED_IN } from './actions/types';
-// import Login from './components/auth/Login';
+import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import AppointmentList from './containers/AppointmentList';
 import EngineerList from './containers/EngineerList';
 import Engineer from './components/Engineer';
 
 const App = ({
-  checkLoginStatus, status, loading, logoutUser,
+  checkLoginStatus,
+  status,
+  loading,
+  logoutUser,
+  toggleForm,
+  formFlag,
 }) => {
   useEffect(() => {
     checkLoginStatus();
@@ -52,8 +57,29 @@ const App = ({
 
   return (
     <div>
-      {/* <Login /> */}
-      <Signup />
+      {formFlag ? (
+        <article>
+          <Login />
+          <p>
+            New User? Sign up
+            {' '}
+            <button type="button" onClick={() => toggleForm()}>
+              here
+            </button>
+          </p>
+        </article>
+      ) : (
+        <article>
+          <Signup />
+          <p>
+            Existing User? Log in
+            {' '}
+            <button type="button" onClick={() => toggleForm()}>
+              here
+            </button>
+          </p>
+        </article>
+      )}
     </div>
   );
 };
@@ -63,16 +89,20 @@ App.propTypes = {
   status: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   logoutUser: PropTypes.func.isRequired,
+  toggleForm: PropTypes.func.isRequired,
+  formFlag: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   status: state.auth.loggedIn,
   loading: state.auth.loading,
+  formFlag: state.auth.toggleForm,
 });
 
 const mapDispatchToProps = dispatch => ({
   checkLoginStatus: () => dispatch(checkLoginStatus()),
   logoutUser: () => dispatch(logout()),
+  toggleForm: () => dispatch(toggleForm()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

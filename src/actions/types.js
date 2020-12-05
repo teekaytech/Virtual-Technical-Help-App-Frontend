@@ -4,6 +4,7 @@ export const API_URL = 'http://localhost:4001/api/v1';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const TOGGLE_FORM = 'TOGGLE_FORM';
 
 export const NOT_LOGGED_IN = 'NOT_LOGGED_IN';
 export const LOGGED_IN = 'LOGGED_IN';
@@ -31,6 +32,7 @@ export const authInitialState = {
   user: {},
   error: '',
   loading: false,
+  toggleForm: true,
 };
 
 export const engineersInitialState = {
