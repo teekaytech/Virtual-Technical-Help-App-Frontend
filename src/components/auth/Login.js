@@ -1,40 +1,87 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
 
 const Login = ({ login }) => {
-  const [username, setusername] = useState('');
-  const [password, setpassword] = useState('');
+  const intialValues = { username: '', password: '' };
+  const [loginDetails, setLoginDetails] = useState(intialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const submitForm = () => {
+    login(loginDetails);
+  };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setLoginDetails({ ...loginDetails, [name]: value });
+  };
+
+  const validate = values => {
+    const errors = {};
+    if (!values.username) {
+      errors.email = 'Hint: username be blank';
+    }
+    if (!values.password) {
+      errors.password = 'Hint: password be blank';
+    } else if (values.password.length < 6) {
+      errors.password = 'Password is definitely more than 5 characters';
+    }
+    return errors;
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmitting) {
+      submitForm();
+    }
+  }, [formErrors, isSubmitting]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    login(username, password);
+    setFormErrors(validate(loginDetails));
+    setIsSubmitting(true);
   };
 
   return (
     <div>
-      <h3>Login Form</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="username"
-          name="username"
-          placeholder="Enter username here"
-          onChange={event => {
-            setusername(event.target.value);
-          }}
-          required
-        />
+      <h3>Log in to continue</h3>
+      <form onSubmit={handleSubmit} noValidate>
+        <div className="form-row">
+          <label htmlFor="username">
+            Username:
+            <input
+              type="username"
+              name="username"
+              id="username"
+              placeholder="Enter username here"
+              value={loginDetails.username}
+              onChange={handleChange}
+              className={formErrors.email && 'input-error'}
+            />
+          </label>
+          {formErrors.email && (
+            <span className="error">{formErrors.email}</span>
+          )}
+        </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password here"
-          onChange={event => {
-            setpassword(event.target.value);
-          }}
-          required
-        />
+        <div className="form-row">
+          <label htmlFor="password">
+            Password:
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={loginDetails.password}
+              placeholder="Enter password here"
+              onChange={handleChange}
+              className={formErrors.password && 'input-error'}
+            />
+          </label>
+          {formErrors.password && (
+            <span className="error">{formErrors.password}</span>
+          )}
+        </div>
         <button type="submit">Login</button>
       </form>
     </div>

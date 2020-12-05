@@ -27,11 +27,10 @@ export const userLogout = () => ({
   type: LOGOUT,
 });
 
-export const login = (username, password) => dispatch => {
+export const login = loginDetails => dispatch => {
   try {
-    const user = { username, password };
     dispatch(requestPending(LOGIN_REQUEST));
-    Axios.post(`${API_URL}/login`, user)
+    Axios.post(`${API_URL}/login`, loginDetails)
       .then(response => {
         if (response.data.logged_in) {
           localStorage.setItem('token', response.data.token);
@@ -39,7 +38,12 @@ export const login = (username, password) => dispatch => {
         }
       })
       .catch(error => {
-        dispatch(requestFailure(LOGIN_FAILURE, `${error.message}: Invalid Username or password`));
+        dispatch(
+          requestFailure(
+            LOGIN_FAILURE,
+            `${error.message}: Invalid Username or password`,
+          ),
+        );
       });
   } catch (error) {
     dispatch(requestFailure(LOGIN_FAILURE, `${error.message}: Unexpected Error. Please try again.`));
