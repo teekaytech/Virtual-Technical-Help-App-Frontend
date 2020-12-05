@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addAppointment } from '../actions/appointment';
 
 const Appointment = ({ engineerId, createAppointment }) => {
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [duration, setDuration] = useState('');
   const status = new Date(date) < new Date() ? 'Past' : 'Upcoming';
 
