@@ -1,58 +1,97 @@
-import React, { useState } from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {
+  Formik, Form, Field, ErrorMessage,
+} from 'formik';
+import * as Yup from 'yup';
 import { addAppointment } from '../actions/appointment';
 
 const Appointment = ({ engineerId, createAppointment }) => {
-  const [date, setDate] = useState(new Date());
-  const [duration, setDuration] = useState('');
-  const status = new Date(date) < new Date() ? 'Past' : 'Upcoming';
+  const initialValues = {
+    date: '',
+    duration: '',
+  };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const appointmentSchema = Yup.object().shape({
+    date: Yup.date()
+      .required('Date is required'),
+
+    duration: Yup.number()
+      .required('Duration is required'),
+  });
+
+  const submitForm = values => {
+    const status = new Date(values.date) < new Date() ? 'Past' : 'Upcoming';
     const data = {
-      engineer_id: engineerId, date, duration, status,
+      engineer_id: engineerId, date: values.date, duration: values.duration, status,
     };
     createAppointment(data);
   };
 
   return (
-    <div>
-      <h4>New Appointment</h4>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="date">
-            Date:
-            <input
-              type="datetime-local"
-              name="date"
-              id="date"
-              value={date}
-              onChange={event => {
-                setDate(event.target.value);
-              }}
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="duration">
-            Estimated Duration (Minutes):
-            <input
-              type="number"
-              name="duration"
-              id="date"
-              value={duration}
-              onChange={event => {
-                setDuration(event.target.value);
-              }}
-            />
-          </label>
-        </div>
-        <div>
-          <button type="submit">Make Appointment</button>
-        </div>
-      </form>
-    </div>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={appointmentSchema}
+      onSubmit={values => { submitForm(values); }}
+    >
+      {formik => {
+        const {
+          errors, touched, isValid, dirty,
+        } = formik;
+        return (
+          <div className="appointment-form-container">
+            <h4>New Appointment</h4>
+            <Form>
+              <div className="form-row">
+                <label htmlFor="date">
+                  Date:
+                  <Field
+                    type="datetime-local"
+                    name="date"
+                    id="date"
+                    className={
+                      errors.date && touched.date ? 'input-error' : null
+                    }
+                  />
+                </label>
+                <ErrorMessage name="date" component="span" className="error" />
+              </div>
+
+              <div className="form-row">
+                <label htmlFor="duration">
+                  Estimated Duration (Minutes):
+                  <Field
+                    type="number"
+                    name="duration"
+                    id="duration"
+                    className={
+                      errors.duration && touched.duration ? 'input-error' : null
+                    }
+                  />
+                </label>
+                <ErrorMessage
+                  name="duration"
+                  component="span"
+                  className="error"
+                />
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  className={!(dirty && isValid) ? 'disabled-btn' : ''}
+                  disabled={!(dirty && isValid)}
+                >
+                  Make Appointment
+                </button>
+              </div>
+            </Form>
+          </div>
+        );
+      }}
+    </Formik>
   );
 };
 

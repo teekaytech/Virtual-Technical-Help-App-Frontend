@@ -21,10 +21,10 @@ const Login = ({ login }) => {
   const validate = values => {
     const errors = {};
     if (!values.username) {
-      errors.email = 'Hint: username be blank';
+      errors.email = 'Hint: Username cannot be blank';
     }
     if (!values.password) {
-      errors.password = 'Hint: password be blank';
+      errors.password = 'Hint: Password cannot be blank';
     } else if (values.password.length < 6) {
       errors.password = 'Password is definitely more than 5 characters';
     }
