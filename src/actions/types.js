@@ -1,5 +1,5 @@
-export const API_URL = 'http://localhost:4001/api/v1';
-// export const URL = "https://boiling-basin-10755.herokuapp.com/api/v1/";
+// export const API_URL = 'http://localhost:4001/api/v1';
+export const API_URL = 'https://boiling-basin-10755.herokuapp.com/api/v1/';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';

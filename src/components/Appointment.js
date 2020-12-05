@@ -6,7 +6,7 @@ import { addAppointment } from '../actions/appointment';
 const Appointment = ({ engineerId, createAppointment }) => {
   const [date, setDate] = useState('');
   const [duration, setDuration] = useState('');
-  const status = 'Booked';
+  const status = new Date(date) < new Date() ? 'Past' : 'Upcoming';
 
   const handleSubmit = e => {
     e.preventDefault();

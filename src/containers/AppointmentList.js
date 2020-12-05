@@ -16,11 +16,12 @@ function AppointmentList({ fetchAppointments, appointments }) {
         <td>{`${appointment.duration} Minutes`}</td>
         <td>{`${appointment.engineer} (${appointment.location})`}</td>
         <td>{new Date(appointment.date_created).toDateString()}</td>
+        <td>{appointment.status}</td>
       </tr>
     ))
   ) : (
     <tr>
-      <td colSpan="5">No appointments made yet.</td>
+      <td colSpan="6">No appointments made yet.</td>
     </tr>
   );
 
@@ -35,6 +36,7 @@ function AppointmentList({ fetchAppointments, appointments }) {
             <th>Expected Duration</th>
             <th>Engineer (Location)</th>
             <th>Date Submitted</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
