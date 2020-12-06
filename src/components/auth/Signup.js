@@ -52,7 +52,7 @@ const Signup = ({ signup }) => {
           <div className="form-container">
             <h3>Registration form</h3>
             <Form>
-              <div className="form-row">
+              <div className="">
                 <label htmlFor="name">Name:</label>
                 <Field
                   type="text"
@@ -64,7 +64,7 @@ const Signup = ({ signup }) => {
                 <ErrorMessage name="name" component="span" className="error" />
               </div>
 
-              <div className="form-row">
+              <div className="">
                 <label htmlFor="username">Username: </label>
                 <Field
                   type="text"
@@ -82,7 +82,7 @@ const Signup = ({ signup }) => {
                 />
               </div>
 
-              <div className="form-row">
+              <div className="">
                 <label htmlFor="username">Email: </label>
                 <Field
                   type="email"
@@ -96,7 +96,7 @@ const Signup = ({ signup }) => {
                 <ErrorMessage name="email" component="span" className="error" />
               </div>
 
-              <div className="form-row">
+              <div className="">
                 <label htmlFor="password">Password: </label>
                 <Field
                   type="password"
@@ -114,7 +114,7 @@ const Signup = ({ signup }) => {
                 />
               </div>
 
-              <div className="form-row">
+              <div className="">
                 <label htmlFor="passwordConfirmation">Confirm Password: </label>
                 <Field
                   type="password"

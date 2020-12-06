@@ -3,11 +3,34 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../actions/auth';
+import { NOT_LOGGED_IN } from '../actions/types';
 
-const Navbar = ({ logout, username, userId }) => {
+const Navbar = ({
+  logout,
+  username,
+  userId,
+  loggedIn,
+  toggleForm,
+  loadForm,
+}) => {
   const handleClick = () => {
     logout();
   };
+
+  if (loggedIn === NOT_LOGGED_IN) {
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => toggleForm()}
+          className="btn btn-primary"
+        >
+          { loadForm ? 'Sign Up' : 'Login'}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <nav>
       <ul>
@@ -21,7 +44,9 @@ const Navbar = ({ logout, username, userId }) => {
           <Link to="/engineers">Engineers</Link>
         </li>
         <li>
-          <button type="button" onClick={() => handleClick()}>Logout</button>
+          <button type="button" onClick={() => handleClick()}>
+            Logout
+          </button>
         </li>
       </ul>
       <h4>
@@ -34,19 +59,24 @@ const Navbar = ({ logout, username, userId }) => {
 };
 
 Navbar.defaultProps = {
-  username: PropTypes.string,
-  logout: PropTypes.func,
+  username: undefined,
+  userId: undefined,
 };
 
 Navbar.propTypes = {
   username: PropTypes.string,
-  logout: PropTypes.func,
-  userId: PropTypes.number.isRequired,
+  logout: PropTypes.func.isRequired,
+  userId: PropTypes.number,
+  loggedIn: PropTypes.string.isRequired,
+  toggleForm: PropTypes.func.isRequired,
+  loadForm: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   username: state.auth.user.username,
   userId: state.auth.user.id,
+  loggedIn: state.auth.loggedIn,
+  loadForm: state.auth.toggleForm,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -47,7 +47,7 @@ const Login = ({ login }) => {
     <div>
       <h3>Log in to continue</h3>
       <form onSubmit={handleSubmit} noValidate>
-        <div className="form-row">
+        <div className="">
           <label htmlFor="username">
             Username:
             <input
@@ -65,7 +65,7 @@ const Login = ({ login }) => {
           )}
         </div>
 
-        <div className="form-row">
+        <div className="">
           <label htmlFor="password">
             Password:
             <input

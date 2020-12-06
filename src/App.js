@@ -27,37 +27,24 @@ const App = ({
     }, 1200000); // logout the user after 30minutes of inactivity
   }, [checkLoginStatus, logoutUser]);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  const loadingScreen = () => <p>Loading data...</p>;
 
-  if (status === LOGGED_IN) {
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <header>
-            <Navbar />
-          </header>
-          <main>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route
-                exact
-                path="/user/:user_id/appointments"
-                component={AppointmentList}
-              />
-              <Route exact path="/engineers" component={EngineerList} />
-              <Route exact path="/engineers/:id" component={Engineer} />
-            </Switch>
-          </main>
-        </div>
-      </BrowserRouter>
-    );
-  }
+  const loggedInScreen = () => (
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route
+        exact
+        path="/user/:user_id/appointments"
+        component={AppointmentList}
+      />
+      <Route exact path="/engineers" component={EngineerList} />
+      <Route exact path="/engineers/:id" component={Engineer} />
+    </Switch>
+  );
 
-  return (
-    <div>
-      {formFlag ? (
+  const authForms = () => {
+    if (formFlag) {
+      return (
         <article>
           <Login />
           <p>
@@ -68,19 +55,38 @@ const App = ({
             </button>
           </p>
         </article>
-      ) : (
-        <article>
-          <Signup />
-          <p>
-            Existing User? Log in
-            {' '}
-            <button type="button" onClick={() => toggleForm()}>
-              here
-            </button>
-          </p>
-        </article>
-      )}
-    </div>
+      );
+    }
+    return (
+      <article>
+        <Signup />
+        <p>
+          Existing User? Log in
+          {' '}
+          <button
+            type="button"
+            onClick={() => toggleForm()}
+            className="btn btn-primary"
+          >
+            here
+          </button>
+        </p>
+      </article>
+    );
+  };
+
+  return (
+    <BrowserRouter>
+      <div className="">
+        <header>
+          <Navbar toggleForm={toggleForm} />
+        </header>
+      </div>
+      <main>
+        {status === LOGGED_IN ? loggedInScreen() : authForms()}
+        {loading ? loadingScreen() : ''}
+      </main>
+    </BrowserRouter>
   );
 };
 
