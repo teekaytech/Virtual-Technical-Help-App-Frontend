@@ -11,6 +11,7 @@ import Signup from './components/auth/Signup';
 import AppointmentList from './containers/AppointmentList';
 import EngineerList from './containers/EngineerList';
 import Engineer from './components/Engineer';
+import styles from './css/app.module.scss';
 
 const App = ({
   checkLoginStatus,
@@ -77,12 +78,10 @@ const App = ({
 
   return (
     <BrowserRouter>
-      <div className="">
+      <main className={styles.app} id="main">
         <header>
           <Navbar toggleForm={toggleForm} />
         </header>
-      </div>
-      <main>
         {status === LOGGED_IN ? loggedInScreen() : authForms()}
         {loading ? loadingScreen() : ''}
       </main>
