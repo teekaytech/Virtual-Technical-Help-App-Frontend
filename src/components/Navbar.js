@@ -57,7 +57,7 @@ const Navbar = ({
 
   const notLoggedInItems = () => (
     <div className={styles.items}>
-      <button type="button" onClick={() => toggleForm()}>
+      <button type="button" onClick={() => toggleForm()} className={styles.item}>
         { formFlag ? 'Sign Up' : 'Login' }
       </button>
     </div>

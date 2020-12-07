@@ -46,30 +46,34 @@ const App = ({
   const authForms = () => {
     if (formFlag) {
       return (
-        <article>
+        <article className={styles.authForm}>
           <Login />
           <p>
-            New User? Sign up
+            New User?
             {' '}
-            <button type="button" onClick={() => toggleForm()}>
-              here
+            <button
+              type="button"
+              onClick={() => toggleForm()}
+              className="btn btn-primary"
+            >
+              Sign up here
             </button>
           </p>
         </article>
       );
     }
     return (
-      <article>
+      <article className={styles.authForm}>
         <Signup />
         <p>
-          Existing User? Log in
+          Existing User?
           {' '}
           <button
             type="button"
             onClick={() => toggleForm()}
             className="btn btn-primary"
           >
-            here
+            Log in here
           </button>
         </p>
       </article>
@@ -78,12 +82,21 @@ const App = ({
 
   return (
     <BrowserRouter>
-      <main className={styles.app} id="main">
+      <main className={`${styles.app}`} id="main">
         <header>
           <Navbar toggleForm={toggleForm} />
         </header>
-        {status === LOGGED_IN ? loggedInScreen() : authForms()}
-        {loading ? loadingScreen() : ''}
+        <div className={`${styles.mainContent} mx-5 px-3 py-5 text-center text-white`}>
+          <h1 className={`${styles.mainTitle} mb-2`}>Virtual Technical Help</h1>
+          <p className={`${styles.details} font-weight-bolder mx-5 my-4 text-large`}>
+            This app is built to connect micronauts (microverse students) who
+            may need technical help to Technical Support Engineers, using
+            microverse (an online training school for remote software
+            developers) as a case study.
+          </p>
+          {status === LOGGED_IN ? loggedInScreen() : authForms()}
+          {loading ? loadingScreen() : ''}
+        </div>
       </main>
     </BrowserRouter>
   );

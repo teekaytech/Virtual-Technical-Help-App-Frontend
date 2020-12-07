@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
+import styles from '../../css/auth.module.scss';
 
 const Login = ({ login }) => {
   const intialValues = { username: '', password: '' };
@@ -45,11 +46,10 @@ const Login = ({ login }) => {
 
   return (
     <div>
-      <h3>Log in to continue</h3>
+      <h4 className="mb-4">Log in to continue</h4>
       <form onSubmit={handleSubmit} noValidate>
-        <div className="">
+        <div className="form-group">
           <label htmlFor="username">
-            Username:
             <input
               type="username"
               name="username"
@@ -57,17 +57,18 @@ const Login = ({ login }) => {
               placeholder="Enter username here"
               value={loginDetails.username}
               onChange={handleChange}
-              className={formErrors.email && 'input-error'}
+              className={`${formErrors.email && 'is-invalid'} form-control`}
             />
           </label>
           {formErrors.email && (
-            <span className="error">{formErrors.email}</span>
+            <span className={`${styles.error} d-block`}>
+              {formErrors.email}
+            </span>
           )}
         </div>
 
-        <div className="">
+        <div className="form-group">
           <label htmlFor="password">
-            Password:
             <input
               type="password"
               name="password"
@@ -75,14 +76,18 @@ const Login = ({ login }) => {
               value={loginDetails.password}
               placeholder="Enter password here"
               onChange={handleChange}
-              className={formErrors.password && 'input-error'}
+              className={`${formErrors.password && 'is-invalid'} form-control`}
             />
           </label>
           {formErrors.password && (
-            <span className="error">{formErrors.password}</span>
+            <span className={`${styles.error} d-block`}>
+              {formErrors.password}
+            </span>
           )}
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className="btn btn-light mb-3">
+          Login
+        </button>
       </form>
     </div>
   );

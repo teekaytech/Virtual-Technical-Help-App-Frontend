@@ -7,6 +7,7 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import { signup } from '../../actions/auth';
+import styles from '../../css/auth.module.scss';
 
 const Signup = ({ signup }) => {
   const initialValues = {
@@ -50,93 +51,115 @@ const Signup = ({ signup }) => {
         } = formik;
         return (
           <div className="form-container">
-            <h3>Registration form</h3>
+            <h4 className="mb-4">Registration form</h4>
             <Form>
-              <div className="">
-                <label htmlFor="name">Name:</label>
-                <Field
-                  type="text"
+              <div className="form-group">
+                <label htmlFor="name">
+                  <Field
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Enter Name here"
+                    className={`${
+                      errors.name && touched.name ? 'is-invalid' : 'is-valid'
+                    } form-control`}
+                  />
+                </label>
+                <ErrorMessage
                   name="name"
-                  id="name"
-                  placeholder="Enter Name here"
-                  className={errors.name && touched.name ? 'input-error' : null}
+                  component="span"
+                  className={`${styles.error} d-block`}
                 />
-                <ErrorMessage name="name" component="span" className="error" />
               </div>
 
-              <div className="">
-                <label htmlFor="username">Username: </label>
-                <Field
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="Enter username here"
-                  className={
-                    errors.username && touched.username ? 'input-error' : null
-                  }
-                />
+              <div className="form-group">
+                <label htmlFor="username">
+                  <Field
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter username here"
+                    className={`${
+                      errors.username && touched.username
+                        ? 'is-invalid'
+                        : 'is-valid'
+                    } form-control`}
+                  />
+                </label>
                 <ErrorMessage
                   name="username"
                   component="span"
-                  className="error"
+                  className={`${styles.error} d-block`}
                 />
               </div>
 
-              <div className="">
-                <label htmlFor="username">Email: </label>
-                <Field
-                  type="email"
+              <div className="form-group">
+                <label htmlFor="username">
+                  <Field
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter email here"
+                    className={`${
+                      errors.email && touched.email ? 'is-invalid' : 'is-valid'
+                    } form-control`}
+                  />
+                </label>
+                <ErrorMessage
                   name="email"
-                  id="email"
-                  placeholder="Enter Email here"
-                  className={
-                    errors.email && touched.email ? 'input-error' : null
-                  }
-                />
-                <ErrorMessage name="email" component="span" className="error" />
-              </div>
-
-              <div className="">
-                <label htmlFor="password">Password: </label>
-                <Field
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Enter password here"
-                  className={
-                    errors.password && touched.password ? 'input-error' : null
-                  }
-                />
-                <ErrorMessage
-                  name="password"
                   component="span"
-                  className="error"
+                  className={`${styles.error} d-block`}
                 />
               </div>
 
-              <div className="">
-                <label htmlFor="passwordConfirmation">Confirm Password: </label>
-                <Field
-                  type="password"
-                  name="passwordConfirmation"
-                  id="passwordConfirmation"
-                  placeholder="Re-enter password here"
-                  className={
-                    errors.passwordConfirmation && touched.passwordConfirmation
-                      ? 'input-error'
-                      : null
-                  }
+              <div className="form-group">
+                <label htmlFor="password">
+                  <Field
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter password here"
+                    className={`${
+                      errors.password && touched.password
+                        ? 'is-invalid'
+                        : 'is-valid'
+                    } form-control`}
+                  />
+                </label>
+                <ErrorMessage
+                  name="password"
+                  component="span"
+                  className={`${styles.error} d-block`}
                 />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="passwordConfirmation">
+                  <Field
+                    type="password"
+                    name="passwordConfirmation"
+                    id="passwordConfirmation"
+                    placeholder="Re-enter password here"
+                    className={`${
+                      errors.passwordConfirmation
+                      && touched.passwordConfirmation
+                        ? 'is-invalid'
+                        : 'is-valid'
+                    } form-control`}
+                  />
+                </label>
                 <ErrorMessage
                   name="passwordConfirmation"
                   component="span"
-                  className="error"
+                  className={`${styles.error} d-block`}
                 />
               </div>
 
               <button
                 type="submit"
-                className={!(dirty && isValid) ? 'disabled-btn' : ''}
+                className={`${
+                  !(dirty && isValid) ? 'disabled-btn' : ''
+                } btn btn-light mb-4`}
                 disabled={!(dirty && isValid)}
               >
                 Register

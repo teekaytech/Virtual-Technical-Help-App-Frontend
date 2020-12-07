@@ -1,7 +1,29 @@
 $background-color: #ffb400;
+$g-color: #98be11;
 
 .app {
-  font-size: larger;
   text-align: center;
   transition: margin-left 0.5s;
+}
+
+.mainContent {
+  background-color: $g-color;
+  border-radius: 10px;
+
+  .mainTitle {
+    font-weight: 900;
+    font-size: 400%;
+  }
+
+  .details {
+    font-size: 20px;
+  }
+
+  .authForm {
+    border: 1px solid #fff;
+    border-radius: 5px;
+    margin: 0 auto;
+    width: 30%;
+    padding: 20px 10px;
+  }
 }
