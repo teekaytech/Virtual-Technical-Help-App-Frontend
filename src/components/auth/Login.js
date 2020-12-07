@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
 import styles from '../../css/auth.module.scss';
+import Spinner from '../Spinner';
 
-const Login = ({ login }) => {
+const Login = ({ login, loading, error }) => {
   const intialValues = { username: '', password: '' };
   const [loginDetails, setLoginDetails] = useState(intialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -47,6 +48,7 @@ const Login = ({ login }) => {
   return (
     <div>
       <h4 className="mb-4">Log in to continue</h4>
+      <span className="d-inline-block mb-2 text-danger">{error}</span>
       <form onSubmit={handleSubmit} noValidate>
         <div className="form-group">
           <label htmlFor="username">
@@ -86,6 +88,7 @@ const Login = ({ login }) => {
           )}
         </div>
         <button type="submit" className="btn btn-light mb-3">
+          {loading ? <Spinner /> : ''}
           Login
         </button>
       </form>
@@ -93,20 +96,19 @@ const Login = ({ login }) => {
   );
 };
 
-Login.defaultProps = {
-  login: PropTypes.func,
-};
-
 Login.propTypes = {
-  login: PropTypes.func,
+  login: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
-// const mapStateToProps = state => ({
-//   details: state.auth,
-// });
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  error: state.auth.error,
+});
 
 const mapDispatchToProps = dispatch => ({
   login: (username, password) => dispatch(login(username, password)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

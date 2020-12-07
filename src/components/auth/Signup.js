@@ -8,8 +8,9 @@ import {
 import * as Yup from 'yup';
 import { signup } from '../../actions/auth';
 import styles from '../../css/auth.module.scss';
+import Spinner from '../Spinner';
 
-const Signup = ({ signup }) => {
+const Signup = ({ signup, loading, error }) => {
   const initialValues = {
     name: '',
     username: '',
@@ -51,7 +52,11 @@ const Signup = ({ signup }) => {
         } = formik;
         return (
           <div className="form-container">
-            <h4 className="mb-4">Registration form</h4>
+            <h4 className="mb-3">Registration form</h4>
+            {
+              error === 'You are not authorized. Please login.' ? ''
+                : (<span className="d-inline-block mb-1 text-danger">{error}</span>)
+            }
             <Form>
               <div className="form-group">
                 <label htmlFor="name">
@@ -162,6 +167,8 @@ const Signup = ({ signup }) => {
                 } btn btn-light mb-4`}
                 disabled={!(dirty && isValid)}
               >
+                {loading ? <Spinner /> : ''}
+                {' '}
                 Register
               </button>
             </Form>
@@ -174,10 +181,13 @@ const Signup = ({ signup }) => {
 
 Signup.propTypes = {
   signup: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-  details: state.auth,
+  loading: state.auth.loading,
+  error: state.auth.error,
 });
 
 const mapDispatchToProps = dispatch => ({

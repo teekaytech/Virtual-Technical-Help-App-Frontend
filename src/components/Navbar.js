@@ -73,6 +73,7 @@ const Navbar = ({
         >
           &times;
         </button>
+        <h2 className="text-center">VTH</h2>
         <span>
           {loggedIn === NOT_LOGGED_IN ? notLoggedInItems() : loggedInItems()}
         </span>

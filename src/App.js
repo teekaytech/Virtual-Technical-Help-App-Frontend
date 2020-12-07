@@ -16,7 +16,6 @@ import styles from './css/app.module.scss';
 const App = ({
   checkLoginStatus,
   status,
-  loading,
   logoutUser,
   toggleForm,
   formFlag,
@@ -27,8 +26,6 @@ const App = ({
       logoutUser();
     }, 1200000); // logout the user after 30minutes of inactivity
   }, [checkLoginStatus, logoutUser]);
-
-  const loadingScreen = () => <p>Loading data...</p>;
 
   const loggedInScreen = () => (
     <Switch>
@@ -95,7 +92,6 @@ const App = ({
             developers) as a case study.
           </p>
           {status === LOGGED_IN ? loggedInScreen() : authForms()}
-          {loading ? loadingScreen() : ''}
         </div>
       </main>
     </BrowserRouter>
@@ -105,7 +101,6 @@ const App = ({
 App.propTypes = {
   checkLoginStatus: PropTypes.func.isRequired,
   status: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
   logoutUser: PropTypes.func.isRequired,
   toggleForm: PropTypes.func.isRequired,
   formFlag: PropTypes.bool.isRequired,
@@ -113,7 +108,6 @@ App.propTypes = {
 
 const mapStateToProps = state => ({
   status: state.auth.loggedIn,
-  loading: state.auth.loading,
   formFlag: state.auth.toggleForm,
 });
 
