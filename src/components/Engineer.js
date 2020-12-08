@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchCurrentEngineer from '../actions/engineer';
 import Appointment from './Appointment';
+import home from '../css/home.module.scss';
+import Spinner from './Spinner';
 
 const Engineer = ({
   loading, engineer, fetchCurrentEngineer, match,
@@ -15,45 +17,50 @@ const Engineer = ({
   );
 
   const thisEngineer = Object.keys(engineer).length ? (
-    <section>
-      <div>
-        <p>
-          Name:
-          {' '}
+    <section className={home.engineer}>
+      <div className={home.engineerImg}>
+        <img
+          src={engineer.avatar_link}
+          alt="Engineer Img"
+          className="img-fluid rounded"
+        />
+      </div>
+      <aside className="text-right">
+        <h5 className="font-weight-bold mb-3 text-uppercase">
           {engineer.name}
-        </p>
+        </h5>
         <p>
           Stack:
           {' '}
           {engineer.stack}
         </p>
         <p>
-          Location
+          Location:
           {' '}
           {engineer.location}
         </p>
-        <img src={engineer.avatar_link} alt="Engineer Img" />
-        <button type="button">
-          Book Appointment with
-          {' '}
-          {engineer.name}
-        </button>
-      </div>
-      <Appointment engineerId={engineer.id} />
+        <Appointment engineerId={engineer.id} />
+      </aside>
     </section>
   ) : (
-    <p>Fetching engineer...</p>
+    <div className="text-center"><Spinner /></div>
   );
 
   if (loading) {
-    return (<p>Fetching engineer...</p>);
+    return (
+      <div className="text-center">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
-    <div>
-      Individual Engineer
+    <section className={home.home}>
+      <h4 className="font-weight-bold mb-5 text-uppercase">
+        Engineer Details
+      </h4>
       {thisEngineer}
-    </div>
+    </section>
   );
 };
 

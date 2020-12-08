@@ -14,3 +14,15 @@ $t-color: #000;
     margin: 10px 0;
   }
 }
+
+.engineer {
+  display: flex;
+
+  .engineerImg {
+    width: 75%;
+  }
+
+  aside {
+    width: 25%;
+  }
+}

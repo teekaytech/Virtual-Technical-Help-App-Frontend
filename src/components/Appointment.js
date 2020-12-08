@@ -7,8 +7,12 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import { addAppointment } from '../actions/appointment';
+import styles from '../css/appointment.module.scss';
+import Spinner from './Spinner';
 
-const Appointment = ({ engineerId, createAppointment }) => {
+const Appointment = ({
+  engineerId, createAppointment, error, loading, createStatus,
+}) => {
   const initialValues = {
     date: '',
     duration: '',
@@ -30,6 +34,14 @@ const Appointment = ({ engineerId, createAppointment }) => {
     createAppointment(data);
   };
 
+  const message = () => (error === '' && createStatus ? (
+    <span className="text-success">Appointment booked successfully.</span>
+  ) : (
+    <span className="text-danger">
+      {error}
+    </span>
+  ));
+
   return (
     <Formik
       initialValues={initialValues}
@@ -41,58 +53,70 @@ const Appointment = ({ engineerId, createAppointment }) => {
           errors, touched, isValid, dirty,
         } = formik;
         return (
-          <div className="appointment-form-container">
-            <h4>New Appointment</h4>
+          <div className={`${styles.main} mt-5 pl-3 border-top pt-3`}>
+            <h6 className="my-4">Make Appointment</h6>
             <Form>
-              <div className="form-row">
-                <label htmlFor="date">
-                  Date:
-                  <Field
-                    type="datetime-local"
-                    name="date"
-                    id="date"
-                    className={
-                      errors.date && touched.date ? 'input-error' : null
-                    }
-                  />
-                </label>
-                <ErrorMessage name="date" component="span" className="error" />
+              <div className="form-group">
+                <label htmlFor="date">Select Date:</label>
+                <Field
+                  type="datetime-local"
+                  name="date"
+                  id="date"
+                  className={`${
+                    errors.date && touched.date ? 'is-invalid' : 'is-valid'
+                  } form-control`}
+                />
+
+                <ErrorMessage
+                  name="date"
+                  component="span"
+                  className="text-danger"
+                />
               </div>
 
-              <div className="form-row">
-                <label htmlFor="duration">
-                  Estimated Duration (Minutes):
-                  <Field
-                    type="number"
-                    name="duration"
-                    id="duration"
-                    className={
-                      errors.duration && touched.duration ? 'input-error' : null
-                    }
-                  />
-                </label>
+              <div className="form-group">
+                <label htmlFor="duration">Estimated Duration (Minutes):</label>
+                <Field
+                  type="number"
+                  name="duration"
+                  id="duration"
+                  className={`${
+                    errors.duration && touched.duration
+                      ? 'is-invalid'
+                      : 'is-valid'
+                  } form-control`}
+                />
                 <ErrorMessage
                   name="duration"
                   component="span"
-                  className="error"
+                  className="text-danger"
                 />
               </div>
 
               <div>
                 <button
                   type="submit"
-                  className={!(dirty && isValid) ? 'disabled-btn' : ''}
+                  className={`${!(dirty && isValid) ? 'disabled-btn' : ''} btn btn-success`}
                   disabled={!(dirty && isValid)}
                 >
-                  Make Appointment
+                  { loading ? <Spinner /> : ''}
+                  Book an Appointment
                 </button>
               </div>
             </Form>
+            <div className="mt-3" />
+            <p>
+              { loading ? '' : message() }
+            </p>
           </div>
         );
       }}
     </Formik>
   );
+};
+
+Appointment.defaultProps = {
+  error: PropTypes.string,
 };
 
 Appointment.propTypes = {
@@ -104,10 +128,16 @@ Appointment.propTypes = {
     name: PropTypes.string,
     username: PropTypes.string,
   }).isRequired,
+  error: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  createStatus: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   user: state.auth.user,
+  error: state.appointments.error,
+  loading: state.appointments.loading,
+  createStatus: state.appointments.createStatus,
 });
 
 const mapDispatchToProps = dispatch => ({
