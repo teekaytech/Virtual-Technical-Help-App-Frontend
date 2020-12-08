@@ -40,6 +40,20 @@ const App = ({
     </Switch>
   );
 
+  const details = () => (
+    <div>
+      <h1 className={`${styles.mainTitle} mb-2`}>Virtual Technical Help</h1>
+      <p
+        className={`${styles.details} font-weight-bolder mx-5 my-4 text-large`}
+      >
+        This app is built to connect micronauts (microverse students) who may
+        need technical help to Technical Support Engineers, using microverse
+        (an online training school for remote software developers) as a case
+        study.
+      </p>
+    </div>
+  );
+
   const authForms = () => {
     if (formFlag) {
       return (
@@ -83,15 +97,15 @@ const App = ({
         <header>
           <Navbar toggleForm={toggleForm} />
         </header>
-        <div className={`${styles.mainContent} mx-5 px-3 py-5 text-center text-white`}>
-          <h1 className={`${styles.mainTitle} mb-2`}>Virtual Technical Help</h1>
-          <p className={`${styles.details} font-weight-bolder mx-5 my-4 text-large`}>
-            This app is built to connect micronauts (microverse students) who
-            may need technical help to Technical Support Engineers, using
-            microverse (an online training school for remote software
-            developers) as a case study.
-          </p>
-          {status === LOGGED_IN ? loggedInScreen() : authForms()}
+        <div
+          className={`${styles.mainContent} mx-5 px-3 py-5 text-center text-white`}
+        >
+          {status === LOGGED_IN ? loggedInScreen() : (
+            <div>
+              {details()}
+              {authForms()}
+            </div>
+          )}
         </div>
       </main>
     </BrowserRouter>
