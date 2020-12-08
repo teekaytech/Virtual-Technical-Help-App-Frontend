@@ -61,7 +61,7 @@ function Home({ userName, logout }) {
 }
 
 Home.propTypes = {
-  userName: PropTypes.func.isRequired,
+  userName: PropTypes.string.isRequired,
   logout: PropTypes.func.isRequired,
 };
 

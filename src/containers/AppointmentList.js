@@ -27,7 +27,7 @@ function AppointmentList({ fetchAppointments, appointments }) {
   );
 
   return (
-    <section className={`${styles.appointments} bg-white p-4`}>
+    <section className={`${styles.appointments} bg-white p-4 table-responsive`}>
       <h4 className="text-uppercase font-weight-bolder mb-4">
         All Appointments
       </h4>
