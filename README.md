@@ -1,8 +1,9 @@
-# Virtual-Technical-Help-App-Frontend
+# Virtual-Technical-Help (Client-Side)
 
-> A technical support application built with React/Redux.
+> This is the client side of a technical support application. This app is built to connect micronauts (microverse students) who may need technical help to Technical Support Engineers, using microverse (an online training school for remote software developers) as a case study.It fetches from [this](https://github.com/teekaytech/Virtual-Technical-Help-App-Backend) backend API (server-side), and it is built with React/Redux.
 
-![Screenshot loading...](public/loading.png)
+![first screenshot...](public/screenshot.png)
+![second screenshot...](public/screenshot2.png)
 
 ## Built With
 
@@ -11,12 +12,12 @@
 - ES6
 - React/Redux
 - React Router DOM
-- React-DOM
 - React-Create-App
+- [![Netlify Status](https://api.netlify.com/api/v1/badges/53246ba5-bf3e-4b83-ac7d-b1de21327341/deploy-status)](https://app.netlify.com/sites/vth-client-side/deploys)
 
 ## Live Demo
 
-<a href="https://react-calc-teekay.herokuapp.com/" target="_blank">Technical Support App</a>
+<a href="https://vth-client-side.netlify.app/" target="_blank">Technical Support App</a>
 
 ## Getting Started
 
@@ -72,6 +73,10 @@ Give a ⭐️ if you like this project!
 
 - [Microverse](https://.microverse.org/)
 - [create-react-app boilerplate from Facebook team](https://github.com/facebook/create-react-app)
+- [Image Color Picker tool](https://imagecolorpicker.com/)
+- [Design idea by Murat Korkmaz on Behance](https://www.behance.net/muratk)
+- [Netlify](https://app.netlify.com/)
+- [Reinald Reynoso's articles medium](https://medium.com/better-programming/build-a-react-redux-app-with-javascript-web-tokens-9f2b73768e18)
 
 ## 📝 License
 

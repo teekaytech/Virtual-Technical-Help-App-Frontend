@@ -37,6 +37,7 @@ const Login = ({ login, loading, error }) => {
     if (Object.keys(formErrors).length === 0 && isSubmitting) {
       submitForm();
     }
+    // eslint-disable-next-line
   }, [formErrors, isSubmitting]);
 
   const handleSubmit = e => {
