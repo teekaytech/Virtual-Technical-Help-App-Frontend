@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchAppointments } from '../actions/appointment';
+import styles from '../css/appointment.module.scss';
 
 function AppointmentList({ fetchAppointments, appointments }) {
   useEffect(() => {
@@ -11,7 +12,7 @@ function AppointmentList({ fetchAppointments, appointments }) {
   const allAppointments = Object.keys(appointments).length ? (
     appointments.map((appointment, sn) => (
       <tr key={appointment.id}>
-        <td>{sn + 1}</td>
+        <th scope="row">{sn + 1}</th>
         <td>{new Date(appointment.date).toDateString()}</td>
         <td>{`${appointment.duration} Minutes`}</td>
         <td>{`${appointment.engineer} (${appointment.location})`}</td>
@@ -26,24 +27,24 @@ function AppointmentList({ fetchAppointments, appointments }) {
   );
 
   return (
-    <div>
-      <h1>All Appointments</h1>
-      <table>
-        <thead>
+    <section className={`${styles.appointments} bg-white p-4`}>
+      <h4 className="text-uppercase font-weight-bolder mb-4">
+        All Appointments
+      </h4>
+      <table className="table">
+        <thead className="thead-dark">
           <tr>
-            <th>#</th>
-            <th>Appointment Date</th>
-            <th>Expected Duration</th>
-            <th>Engineer (Location)</th>
-            <th>Date Submitted</th>
-            <th>Status</th>
+            <th scope="col">#</th>
+            <th scope="col">Appointment Date</th>
+            <th scope="col">Expected Duration</th>
+            <th scope="col">Engineer (Location)</th>
+            <th scope="col">Date Submitted</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
-        <tbody>
-          {allAppointments}
-        </tbody>
+        <tbody>{allAppointments}</tbody>
       </table>
-    </div>
+    </section>
   );
 }
 
