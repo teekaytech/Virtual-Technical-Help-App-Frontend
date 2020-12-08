@@ -60,8 +60,12 @@ function Home({ userName, logout }) {
   );
 }
 
+Home.defaultProps = {
+  userName: undefined,
+};
+
 Home.propTypes = {
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
   logout: PropTypes.func.isRequired,
 };
 

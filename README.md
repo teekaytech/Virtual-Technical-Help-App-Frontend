@@ -50,6 +50,10 @@ Click on the live demo link and peruse the app.
 - `npm install` to install the dependencies and packages
 - `npm start` to test the app after changes were made
 
+### Running tests
+
+- `npm test` to run the test suites.
+
 ## Author
 
 👤 **Taofeek Olalere**
