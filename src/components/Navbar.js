@@ -32,26 +32,37 @@ const Navbar = ({
 
   const loggedInItems = () => (
     <div className={styles.items}>
+      <p className="bold text-success">
+        <span>Current User:</span>
+        {' '}
+        {username}
+      </p>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" className={styles.item}>
+            Home
+          </Link>
         </li>
         <li>
-          <Link to={`/user/${userId}/appointments`}>Appointments</Link>
+          <Link to={`/user/${userId}/appointments`} className={styles.item}>
+            Appointments
+          </Link>
         </li>
         <li>
-          <Link to="/engineers">Engineers</Link>
+          <Link to="/engineers" className={styles.item}>
+            Engineers
+          </Link>
         </li>
         <li>
-          <button type="button" onClick={() => handleClick()}>
+          <button
+            type="button"
+            onClick={() => handleClick()}
+            className={styles.item}
+          >
             Logout
           </button>
         </li>
       </ul>
-      <h4>
-        Current User:
-        {username}
-      </h4>
     </div>
   );
 

@@ -64,11 +64,18 @@ $g-color: #98be11;
       display: block;
       width: 100%;
       text-align: left;
-      padding: 2px 15px;
+      padding: 10px 15px;
       border: unset;
       background-color: $g-color;
       color: $font-color;
       font-weight: bolder;
+      margin: 10px 0;
+      text-decoration: none;
+    }
+
+    .item:hover {
+      color: $font-color;
+      background-color: $bg-color;
     }
   }
 }
