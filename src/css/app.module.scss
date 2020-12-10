@@ -27,3 +27,12 @@ $g-color: #98be11;
     padding: 20px 10px;
   }
 }
+
+@media (max-width: 575.98px) {
+  .mainContent {
+    .authForm {
+      width: 90%;
+      padding: 20px 10px;
+    }
+  }
+}

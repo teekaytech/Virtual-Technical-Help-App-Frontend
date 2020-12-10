@@ -25,20 +25,29 @@ const EngineerList = ({ loading, engineers, fetchAllEngineers }) => {
   };
   const allEngineers = engineers && engineers.length > 0 ? (
     <Slider {...settings}>
-      { engineers.map(engineer => (
-        <article className="card text-center px-3" key={engineer.id}>
+      {engineers.map(engineer => (
+        <article className="text-center px-3 my-3" key={engineer.id}>
           <img
             src={engineer.avatar_link}
             className="card-img-top"
             alt={engineer.name}
           />
-          <h5 className="card-title text-uppercase mt-2">{engineer.name}</h5>
-          <p className="card-text">{engineer.stack}</p>
-          <Link to={`/engineers/${engineer.id}`} className="btn btn-success">
-            View Details
-          </Link>
+          <div className="card-body">
+            <h5 className="card-title text-uppercase mt-2">
+              {engineer.name}
+            </h5>
+            <p className="card-text">{engineer.stack}</p>
+          </div>
+          <div className="card-footer text-muted">
+            <Link
+              to={`/engineers/${engineer.id}`}
+              className="btn btn-success"
+            >
+              View Details
+            </Link>
+          </div>
         </article>
-      )) }
+      ))}
     </Slider>
   ) : (
     <p>There are currently no engineer available. please check later. </p>

@@ -44,7 +44,7 @@ const App = ({
     <div>
       <h1 className={`${styles.mainTitle} mb-2`}>Virtual Technical Help</h1>
       <p
-        className={`${styles.details} font-weight-bolder mx-5 my-4 text-large`}
+        className={`${styles.details} font-weight-bolder mx-5 my-4`}
       >
         This app is built to connect micronauts (microverse students) who may
         need technical help to Technical Support Engineers, using microverse
@@ -98,7 +98,7 @@ const App = ({
           <Navbar toggleForm={toggleForm} />
         </header>
         <div
-          className={`${styles.mainContent} mx-5 px-3 py-5 text-center text-white`}
+          className={`${styles.mainContent} mx-5 px-3 px-sm-1 py-5  text-center text-white`}
         >
           {status === LOGGED_IN ? loggedInScreen() : (
             <div>
