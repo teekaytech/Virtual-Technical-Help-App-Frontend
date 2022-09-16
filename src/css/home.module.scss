@@ -1,0 +1,17 @@
+$font-color: #fff;
+$bg-color: #ffb400;
+$g-color: #98be11;
+$t-color: #000;
+
+.home {
+  padding: 20px;
+  margin: 0 10px;
+  text-align: left;
+  background-color: $font-color;
+  color: $t-color;
+  font-size: large;
+
+  ul li {
+    margin: 10px 0;
+  }
+}
